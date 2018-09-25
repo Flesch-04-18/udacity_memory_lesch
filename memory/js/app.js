@@ -1,90 +1,182 @@
-/*Each turn:
 
-    The player flips one card over to reveal its underlying symbol.
-    The player then turns over a second card, trying to find the corresponding card with the same symbol.
+
+var turnPoint=3;
+var x=0;
+
+
+
+$(".card").click(turn());
+
+    turn()
+
+
+function turn() {
+    var flippedCard1 = flippedCard1;
+    var flippedCard2 = flippedCard2;
+    var matchCounter = 0;
+    var moves = 0;
+
+
+switch (turnPoint) {
+
+case 0:
+    // The player flips one card over to reveal its underlying symbol.
+    $(".card").click(function () {
+        if (flippedCard1===undefined){
+        $(this).addClass("open show unclickable");
+        flippedCard1 = ($(this).children().attr('class'));
+        turnPoint=1;
+    }   
+        // The player then turns over a second card, trying to find the corresponding card with the same symbol.
+        else{
+        $(this).addClass("open show unclickable"),
+        flippedCard2 = ($(this).children().attr('class'));
+
+            //    What happens when cards match
+            if ((flippedCard1.substr(3)) === (flippedCard2.substr(3))) {
+            var faName = '.' + (flippedCard1.substr(3));
+            console.log("MATCH " + faName);
+            $(faName).parent().removeClass("open").addClass("match");
+            flippedCard1 = undefined;
+            flippedCard2 = undefined;
+            moves=moves+1;;
+            $(".moves").text(moves);
+            turnPoint=0;
+            console.log(matchCounter=matchCounter+1);
+            return (matchCounter);
+    }
+            // What happens when cards do not match
+            else if ((flippedCard1.substr(3)) !== (flippedCard2.substr(3))) {
+            var faName1 = '.' + (flippedCard1.substr(3));
+            var faName2 = '.' + (flippedCard2.substr(3));
+            console.log("DISMATCH " + faName1, faName2);
+            setTimeout(() => {
+            $(faName1).parent().removeClass("open show unclickable"),
+            $(faName2).parent().removeClass("open show unclickable");
+            }, 1000);
+            flippedCard1 = undefined;
+            flippedCard2 = undefined;
+            moves=moves+1;
+            $(".moves").text(moves);
+            turnPoint=0;
+        }
+    }
+})
+
+
+    break;
+
+
+/*case 1:
+
+    secondFlipp(flippedCard1);
+    break;
+*/
+
+case 2:
+    //    What happens when cards match
+    if ((flippedCard1.substr(3)) === (flippedCard2.substr(3))) {
+        var faName = '.' + (flippedCard1.substr(3));
+        console.log("MATCH " + faName);
+        $(faName).parent().removeClass("open").addClass("match");
+        flippedCard1 = "";
+        flippedCard2 = "";
+        moves=+1;;
+        $(".moves").text(moves);
+        turnPoint=0;
+        return (matchCounter=+1);
+    }
+// What happens when cards do not match
+else if ((flippedCard1.substr(3)) !== (flippedCard2.substr(3))) {
+    var faName1 = '.' + (flippedCard1.substr(3));
+    var faName2 = '.' + (flippedCard2.substr(3));
+    console.log("DISMATCH " + faName1, faName2);
+    setTimeout(() => {
+        $(faName1).parent().removeClass("open show unclickable"),
+        $(faName2).parent().removeClass("open show unclickable");
+    }, 1000);
+    flippedCard1 === ""
+    flippedCard2 === ""
+    moves=+1;
+    $(".moves").text(moves);
+    turnPoint=0;
+    //return(flippedCard1, flippedCard2)
+}
+    break;
+
+case 3:
+    //    turn start
+    var flippedCard1 = "";
+    var flippedCard2 = "";
+    turnPoint=0;
+    break;
+
+
+default:
+    break;
+}
+}
+    function firstFlipp() {
+
+        $(".card").click(function () {
+            if (flippedCard1===""){
+            $(this).addClass("open show unclickable");
+            flippedCard1 = ($(this).children().attr('class'));
+            turnPoint=1;
+            turn(flippedCard1);
+        }   
+            else{
+            $(this).addClass("open show unclickable"),
+            flippedCard2 = ($(this).children().attr('class'));
+            console.log("click 2 " + $(this).children().attr('class'));
+            turnPoint=2;
+            turn(flippedCard1, flippedCard2)
+            }})
+    
+    }
+
+    function checkMatch(flippedCard1, flippedCard2) {
+        if ((flippedCard1.substr(3)) === (flippedCard2.substr(3))) {
+            var faName = '.' + (flippedCard1.substr(3));
+            console.log("MATCH " + faName);
+            $(faName).parent().removeClass("open").addClass("match");
+            (flippedCard1).length = 0;
+            flippedCard2 = ""
+            moves=+1;
+            $(".moves").text(moves);
+            turnPoint=0;
+            return (matchCounter=+1, flippedCard1, flippedCard2);
+        }
+    // What happens when cards do not match
+    else if ((flippedCard1.substr(3)) !== (flippedCard2.substr(3))) {
+        var faName1 = '.' + (flippedCard1.substr(3));
+        var faName2 = '.' + (flippedCard2.substr(3));
+        console.log("DISMATCH " + faName1, faName2);
+        setTimeout(() => {
+            $(faName1).parent().removeClass("open show unclickable"),
+            $(faName2).parent().removeClass("open show unclickable");
+        }, 1000);
+        flippedCard1 === ""
+        flippedCard2 === ""
+        moves=+1;
+        $(".moves").text(moves);
+        turnPoint=0;
+        return(flippedCard1, flippedCard2)
+    }
+};
+
+    function win(matchCounter) {
+        if (matchCounter === 8) {
+            console.log("You Win!")
+        }
+};
+
+
+
+
+/*
+
     If the cards match, both cards stay flipped over.
     If the cards do not match, both cards are flipped face down.
 
-The game ends once all cards have been correctly matched.
-
-
-functions
-
-
-    Flipping cards
-    What happens when cards match
-    What happens when cards do not match
-    When the game finishes
-
-
-Criteria 	Meets Specifications
-
-Memory Game Logic
-	
-
-The game randomly shuffles the cards. A user wins once all cards have successfully been matched.
-
-Congratulations Popup
-	
-
-When a user wins the game, a modal appears to congratulate the player and ask if they want to play again. It should also tell the user how much time it took to win the game, and what the star rating was.
-
-Restart Button
-	
-
-A restart button allows the player to reset the game board, the timer, and the star rating.
-
-Star Rating
-	
-
-The game displays a star rating (from 1 to at least 3) that reflects the player's performance. At the beginning of a game, it should display at least 3 stars. After some number of moves, it should change to a lower star rating. After a few more moves, it should change to a even lower star rating (down to 1).
-
-The number of moves needed to change the rating is up to you, but it should happen at some point.
-
-Timer
-	
-
-When the player starts a game, a displayed timer should also start. Once the player wins the game, the timer stops.
-
-Move Counter
-	
-
-Game displays the current number of moves a user has made.
-
-Interface Design
-Criteria 	Meets Specifications
-
-Styling
-	
-
-Application uses CSS to style components for the game.
-
-Usability
-	
-
-All application components are usable across modern desktop, tablet, and phone browsers.
-
-Documentation
-Criteria 	Meets Specifications
-
-README
-	
-
-A README file is included detailing the game and all dependencies.
-
-Comments
-	
-
-Comments are present and effectively explain longer code procedure when necessary.
-
-Code Quality
-	
-
-Code is formatted with consistent, logical, and easy-to-read formatting as described in the Udacity JavaScript Style Guide.
-Suggestions to Make Your Project Stand Out!
-
-    Add CSS animations when cards are clicked, unsuccessfully matched, and successfully matched.
-    Add unique functionality beyond the minimum requirements (Implement a leaderboard, store game state using local storage, etc.)
-    Implement additional optimizations that improve the performance and user experience of the game (keyboard shortcuts for gameplay, etc).
-
-*/
+The game ends once all cards have been correctly matched.*/
