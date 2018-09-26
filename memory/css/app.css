@@ -112,3 +112,7 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.score-panel .stars-highlight {
+    color: rgb(255, 0, 0);
+}
