@@ -1,17 +1,39 @@
 var turnPoint=3;
+var cardArray=["fa-diamond","fa-diamond","fa-paper-plane-o","fa-paper-plane-o","fa-anchor","fa-anchor","fa-bolt","fa-bolt","fa-cube","fa-cube","fa-leaf","fa-leaf","fa-bicycle","fa-bicycle","fa-bomb","fa-bomb"];
 
 $(".card").click(turn());
 
     turn()
 
 function restart(){
-    console.log("New Game");
-    $(".card").removeClass("match show unclickable")
+    const allCards = document.querySelectorAll(".card");
+    $(".card").removeClass("match show unclickable");
     $(".moves").text("0");
+    mixcards(cardArray);
+    for (i=0; i < 16; i++){
+        allCards[i].firstElementChild.classList.remove("fa-diamond","fa-paper-plane-o","fa-anchor","fa-bolt","fa-cube","fa-leaf","fa-bicycle","fa-bomb");
+        allCards[i].firstElementChild.classList.add(cardArray[i]);
+    }
     matchCounter=0;
     turnpoint=3;
     turn();
 }
+
+function mixcards(cardArray){
+    var currentIndex = cardArray.length, temporaryValue, randomIndex;
+    
+    while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = cardArray[currentIndex];
+        cardArray[currentIndex] = cardArray[randomIndex];
+        cardArray[randomIndex] = temporaryValue;
+    }
+
+    return(cardArray);
+
+}
+
 
 function turn() {
     var flippedCard1 = flippedCard1;
@@ -84,6 +106,7 @@ case 3:
     var flippedCard2 = "";
     matchCounter = 0;
     turnPoint=0;
+    restart();
     break;
 
 case 4:
