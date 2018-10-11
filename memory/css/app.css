@@ -85,6 +85,11 @@ h1 {
 .deck .card.unclickable {
     cursor: not-allowed;
 }
+
+.deck .card.hidden {
+    visibility: hidden;
+}
+
 /*
  * Styles for the Score Panel
  */
