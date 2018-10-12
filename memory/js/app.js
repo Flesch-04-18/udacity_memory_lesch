@@ -3,6 +3,7 @@ var cardArray = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane
     "fa-leaf", "fa-leaf", "fa-bicycle", "fa-bicycle", "fa-bomb", "fa-bomb"];
 
 var moves = 0;
+var time = "";
 
 $(".card").click();
 restart()
@@ -113,12 +114,19 @@ function turn() {
         //TODO create modal 
 
         //open modal win;
-        var deck = document.getElementById("deck");
-        var winAllert = "<div><h1>Congratulations, you won!!!</h1></div>";
-        const allCards = document.querySelectorAll(".card");
+        var deck = document.querySelector(".deck");
+        var childFromDeck = document.querySelector("li.card");
+        var winAllert = document.createElement("div");
+        //const allCards = document.querySelectorAll(".card");
+        var text = "\<h1\>Congratulations, you won\!\!\!\<\/h1\>\<br\>\<br\>"+
+                    "\<h2\>It takes you " + moves + " moves to complete!\<br\>\<br\>" +
+                    "And your Time is " + time + "\<\/h2\>";
 
+        winAllert.insertAdjacentHTML('afterbegin', text);;
     for (i = 0; i < 16; i++) {
-        allCards[i].classList.add("hidden");
+        var childFromDeck = document.querySelector("li.card");
+        deck.removeChild(childFromDeck);
+        //allCards[i].classList.add("hidden");
     }
     deck.appendChild(winAllert)
 }
